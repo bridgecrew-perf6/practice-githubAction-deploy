@@ -53,8 +53,10 @@ jobs:
     
     # CodeDeploy에게 배로 명령을 내립니다.
     - name: Code Deploy
-      run: >
-        aws deploy create-deployment --application-name githubAction-deploy
-        --deployment-config-name CodeDeployDefault.AllAtOnce
-        --deployment-group-name githubAction-deploy-group
-        --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=practice-deploy.zip   
+      run: |
+          aws deploy create-deployment \
+          --application-name githubAction-deploy \
+          --deployment-group-name githubAction-deploy-group \
+          --file-exists-behavior OVERWRITE \
+          --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=practice-deploy.zip \
+          --region ap-northeast-2
